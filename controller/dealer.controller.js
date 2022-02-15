@@ -11,6 +11,8 @@ exports.create = (req, res) => {
   // Create a Driver
   const dealer = new Dealer({
     name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
     mobile: req.body.mobile,
     natureOfMaterial: req.body.natureOfMaterial,
     weightOfMaterial: req.body.weightOfMaterial,
@@ -107,5 +109,21 @@ exports.getByCityAndState = (req, res) => {
           err.message || 'Some error occurred while retrieving Dealer.',
       });
     else res.send(data);
+  });
+}
+
+exports.login = (req, res) => {
+  Dealer.login(req.body.email, req.body.password, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found dealer with email ${req.body.email}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: 'Error retrieving dealer with email ' + req.body.email,
+        });
+      }
+    } else res.send(data);
   });
 }

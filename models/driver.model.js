@@ -2,6 +2,8 @@ const sql = require('../config/db.js');
 
 const Driver = function(driver) {
   this.name = driver.name;
+  this.email = dealer.email;
+  this.password = dealer.password;
   this.age = driver.age;
   this.truckNumber = driver.truckNumber;
   this.mobile = driver.mobile;
@@ -47,7 +49,7 @@ Driver.findById = (driverId, result) => {
 
 Driver.updateById = (id, driver, result) => {
   sql.query(
-    'UPDATE driver SET name = ?, age = ?, truckNumber = ?, mobile = ?, truckCapacity = ?, transporterName = ?, drivingExperience = ?, route1 = ?, route2 = ?, route3 = ? WHERE id = ?',
+    'UPDATE driver SET name = ?, email = ?, age = ?, truckNumber = ?, mobile = ?, truckCapacity = ?, transporterName = ?, drivingExperience = ?, route1 = ?, route2 = ?, route3 = ? WHERE id = ?',
     [driver.name, driver.age, driver.truckNumber, driver.mobile, driver.truckCapacity, driver.transporterName, driver.drivingExperience, driver.route1, driver.route2, driver.route3, id],
     (err, res) => {
       if (err) {
@@ -99,5 +101,22 @@ Driver.getAll = result => {
     result({ kind: 'not_found' }, null);
   });
 };
+
+Driver.login = (email, password, result) => {
+  sql.query('SELECT * FROM driver WHERE email = ? AND password = ?', [email, password], (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if (res.length) {
+      console.log('found driver: ', res[0]);
+      result(null, res[0]);
+      return;
+    }
+    // not found Dealer with the id
+    result({ kind: 'not_found' }, null);
+  });
+}
 
 module.exports = Driver;

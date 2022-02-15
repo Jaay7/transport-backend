@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/addDriver', driver.create);
+router.post('/login', driver.login);
 router.get('/getDriver/:driverId', driver.findById);
 router.get('/getAllDrivers', driver.getAll);
 router.put('/updateDriver/:driverId', driver.updateById);

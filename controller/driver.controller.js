@@ -11,6 +11,8 @@ exports.create = (req, res) => {
   // Create a Driver
   const driver = new Driver({
     name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
     age: req.body.age,
     truckNumber: req.body.truckNumber,
     mobile: req.body.mobile,
@@ -101,3 +103,19 @@ exports.getAll = (req, res) => {
     else res.send(data);
   });
 };
+
+exports.login = (req, res) => {
+  Driver.login(req.body.email, req.body.password, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found Driver with email ${req.body.email}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: 'Error retrieving Driver with email ' + req.body.email,
+        });
+      }
+    } else res.send(data);
+  });
+}

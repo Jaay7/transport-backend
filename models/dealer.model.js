@@ -2,6 +2,8 @@ const sql = require('../config/db.js');
 
 const Dealer = function(dealer) {
   this.name = dealer.name;
+  this.email = dealer.email;
+  this.password = dealer.password;
   this.mobile = dealer.mobile;
   this.natureOfMaterial = dealer.natureOfMaterial;
   this.weightOfMaterial = dealer.weightOfMaterial;
@@ -44,8 +46,8 @@ Dealer.findById = (dealerId, result) => {
 
 Dealer.updateById = (id, dealer, result) => {
   sql.query(
-    'UPDATE dealer SET name = ?, mobile = ?, natureOfMaterial = ?, weightOfMaterial = ?, quantity = ?, city = ?, state = ? WHERE id = ?',
-    [dealer.name, dealer.mobile, dealer.natureOfMaterial, dealer.weightOfMaterial, dealer.quantity, dealer.city, dealer.state, id],
+    'UPDATE dealer SET name = ?, email = ?, mobile = ?, natureOfMaterial = ?, weightOfMaterial = ?, quantity = ?, city = ?, state = ? WHERE id = ?',
+    [dealer.name, dealer.email, dealer.mobile, dealer.natureOfMaterial, dealer.weightOfMaterial, dealer.quantity, dealer.city, dealer.state, id],
     (err, res) => {
       if (err) {
         console.log('error: ', err);
@@ -103,6 +105,23 @@ Dealer.getByCityAndState = (city, state, result) => {
 
     console.log('dealers: ', res);
     result(null, res);
+  });
+}
+
+Dealer.login = (email, password, result) => {
+  sql.query('SELECT * FROM dealer WHERE email = ? AND password = ?', [email, password], (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if (res.length) {
+      console.log('found dealer: ', res[0]);
+      result(null, res[0]);
+      return;
+    }
+    // not found Dealer with the id
+    result({ kind: 'not_found' }, null);
   });
 }
 
