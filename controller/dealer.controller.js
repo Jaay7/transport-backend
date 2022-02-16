@@ -101,8 +101,8 @@ exports.getAll = (req, res) => {
   });
 }
 
-exports.getByCityAndState = (req, res) => {
-  Dealer.getByCityAndState(req.params.city, req.params.state, (err, data) => {
+exports.getByCity = (req, res) => {
+  Dealer.getByCity(req.params.city, (err, data) => {
     if (err)
       res.status(500).send({
         message:

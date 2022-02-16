@@ -95,8 +95,8 @@ Dealer.getAll = result => {
   });
 };
 
-Dealer.getByCityAndState = (city, state, result) => {
-  sql.query(`SELECT * FROM dealer WHERE city = '${city}' AND state = '${state}'`, (err, res) => {
+Dealer.getByCity = (city, result) => {
+  sql.query(`SELECT * FROM dealer WHERE city = '${city}'`, (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);
