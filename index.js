@@ -9,7 +9,7 @@ var dealer = require('./routes/dealer.routes.js');
 var driver = require('./routes/driver.routes.js');
 
 var corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'http://localhost:4200',
 };
 
 app.use(cors(corsOptions));
