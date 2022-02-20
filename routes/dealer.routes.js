@@ -8,6 +8,7 @@ router.get('/getDealer/:dealerId', dealer.findById);
 router.put('/updateDealer/:dealerId', dealer.updateById);
 router.get('/getAllDealers', dealer.getAll);
 router.get('/getAllDealersByCity/:city', dealer.getByCity);
+router.get('/getDriversByRoutes/:myCity', dealer.getDriversByRoutes);
 router.delete('/deleteDealer/:dealerId', dealer.delete);
 
 module.exports = router;

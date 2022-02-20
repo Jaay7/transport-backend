@@ -127,3 +127,19 @@ exports.login = (req, res) => {
     } else res.send(data);
   });
 }
+
+exports.getDriversByRoutes = (req, res) => {
+  Dealer.getDriversByRoutes(req.params.myCity, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `No driver routes matches the city ${myCity}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: 'Error retrieving driver routes with city ' + myCity,
+        });
+      }
+    } else res.send(data);
+  });
+}

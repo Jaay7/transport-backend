@@ -125,4 +125,21 @@ Dealer.login = (email, password, result) => {
   });
 }
 
+Dealer.getDriversByRoutes = (myCity, result) => {
+  sql.query(`SELECT * FROM driver WHERE route1 REGEXP '${myCity}' or route2 REGEXP '${myCity}' or route3 REGEXP '${myCity}'`, (err, res) => {
+    if(err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if(res.length) {
+      console.log('found drivers: ', res);
+      result(null, res);
+      return;
+    }
+    // not found drivers from those routes
+    result({ kind: 'not_found' }, null);
+  })
+}
+
 module.exports = Dealer;
