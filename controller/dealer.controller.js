@@ -132,12 +132,12 @@ exports.getDriversByRoutes = (req, res) => {
   Dealer.getDriversByRoutes(req.params.myCity, (err, data) => {
     if (err) {
       if (err.kind === 'not_found') {
-        res.status(404).send({
-          message: `No driver routes matches the city ${myCity}.`,
+        res.status(200).send({
+          message: `No driver routes matches the city ${req.params.myCity}.`,
         });
       } else {
         res.status(500).send({
-          message: 'Error retrieving driver routes with city ' + myCity,
+          message: 'Error retrieving driver routes with city ' + req.params.myCity,
         });
       }
     } else res.send(data);
