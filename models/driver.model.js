@@ -119,4 +119,38 @@ Driver.login = (email, password, result) => {
   });
 }
 
+Driver.acceptDealer = (id, dealerId, driverId, result) => {
+  sql.query(`UPDATE cart SET reqByDealer = ?, accByDriver = ? WHERE id = ${id} and dealerId = ${dealerId} and driverId = ${driverId}`, ['done', 'accepted'], (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if (res.affectedRows == 0) {
+      // not found Dealer with the id
+      result({ kind: 'not_found' }, null);
+      return;
+    }
+    console.log('updated cart: ', { id: id, dealerId: dealerId, driverId: driverId });
+    result(null, { id: id, dealerId: dealerId, driverId: driverId });
+  });
+}
+
+Driver.removeRequest = (id, dealerId, driverId, result) => {
+  sql.query(`DELETE FROM cart WHERE id = ${id} and dealerId = ${dealerId} and driverId = ${driverId}`, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if(res.affectedRows == 0) {
+      // not found Dealer with the id
+      result({ kind: 'not_found' }, null);
+      return;
+    }
+    console.log('deleted request: ', { id: id, dealerId: dealerId, driverId: driverId });
+    result(null, { id: id, dealerId: dealerId, driverId: driverId });
+  });
+}
+
 module.exports = Driver;

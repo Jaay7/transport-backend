@@ -119,3 +119,35 @@ exports.login = (req, res) => {
     } else res.send(data);
   });
 }
+
+exports.acceptDealer = (req, res) => {
+  Driver.acceptDealer(req.params.id, req.params.dealerId, req.params.driverId, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found cart with id ${req.params.id}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: 'Error retrieving Driver with id ' + req.params.driverId,
+        });
+      }
+    } else res.send(data);
+  });
+}
+
+exports.removeRequest = (req, res) => {
+  Driver.removeRequest(req.params.id, req.params.dealerId, req.params.driverId, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found cart with id ${req.params.id}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: 'Error retrieving Driver with id ' + req.params.driverId,
+        });
+      }
+    } else res.send(data);
+  });
+}

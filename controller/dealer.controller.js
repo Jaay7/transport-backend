@@ -143,3 +143,45 @@ exports.getDriversByRoutes = (req, res) => {
     } else res.send(data);
   });
 }
+
+exports.requestDriver = (req, res) => {
+  Dealer.requestDriver(req.params.dealerId, req.params.driverId, (err, data) => {
+    if (err) {
+      res.status(500).send({
+        message: 'Error retrieving dealer with id ' + req.params.dealerId,
+      });
+    } else res.send(data);
+  });
+}
+
+exports.getRequestedDrivers = (req, res) => {
+  Dealer.getRequestedDrivers(req.params.dealerId, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Empty requests by dealer with id ${req.params.dealerId}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: 'Error retrieving dealer with id ' + req.params.dealerId,
+        });
+      }
+    } else res.send(data);
+  });
+}
+
+exports.removeRequest = (req, res) => {
+  Dealer.removeRequest(req.params.id, req.params.dealerId, req.params.driverId, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found cart with id '${req.params.id}'`,
+        });
+      } else {
+        res.status(500).send({
+          message: 'Error retrieving dealer with id ' + req.params.dealerId + ' or driver with id ' + req.params.driverId,
+        });
+      }
+    } else res.send(data);
+  });
+}

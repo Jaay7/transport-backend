@@ -7,6 +7,8 @@ router.post('/login', driver.login);
 router.get('/getDriver/:driverId', driver.findById);
 router.get('/getAllDrivers', driver.getAll);
 router.put('/updateDriver/:driverId', driver.updateById);
+router.put('/acceptDealer/:id/:dealerId/:driverId', driver.acceptDealer);
 router.delete('/deleteDriver/:driverId', driver.delete);
+router.delete('/removeRequest/:id/:dealerId/:driverId', driver.removeRequest);
 
 module.exports = router;

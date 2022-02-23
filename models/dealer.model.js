@@ -142,4 +142,51 @@ Dealer.getDriversByRoutes = (myCity, result) => {
   })
 }
 
+Dealer.requestDriver = (dealerId, driverId, result) => {
+  sql.query('INSERT INTO cart SET ?', { dealerId: dealerId, driverId: driverId, reqByDealer: 'sent', accByDriver: 'pending' }, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+
+    console.log('created driver request: ', { id: res.id, dealerId: dealerId, driverId: driverId });
+    result(null, { id: res.id, dealerId: dealerId, driverId: driverId });
+  });
+}
+
+Dealer.getRequestedDrivers = (dealerId, result) => {
+  sql.query(`SELECT * FROM cart WHERE dealerId = ${dealerId}`, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if(res.length) {
+      console.log('found requests: ', res);
+      result(null, res);
+      return;
+    }
+    // not found requests
+    result({ kind: 'not_found' }, null);
+  });
+}
+
+Dealer.removeRequest = (id, dealerId, driverId, result) => {
+  sql.query(`DELETE FROM cart WHERE id = ${id} and dealerId = ${dealerId} and driverId = ${driverId}`, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if(res.affectedRows == 0) {
+      // not found Dealer with the id
+      result({ kind: 'not_found' }, null);
+      return;
+    }
+    console.log('deleted request: ', { id: id, dealerId: dealerId, driverId: driverId });
+    result(null, { id: id, dealerId: dealerId, driverId: driverId });
+  });
+}
+
 module.exports = Dealer;
