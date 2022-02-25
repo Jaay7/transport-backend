@@ -126,7 +126,7 @@ Dealer.login = (email, password, result) => {
 }
 
 Dealer.getDriversByRoutes = (myCity, result) => {
-  sql.query(`SELECT * FROM driver WHERE route1 REGEXP '${myCity}' or route2 REGEXP '${myCity}' or route3 REGEXP '${myCity}'`, (err, res) => {
+  sql.query(`select driver.*, ifnull(cart.id, 0) as cartId, ifnull(cart.reqByDealer, 'none') as reqByDealer, ifnull(cart.accByDriver, 'none') as accByDriver from driver left join cart on cart.driverId = driver.id where driver.route1 regexp '${myCity}' or driver.route2 regexp '${myCity}' or driver.route3 regexp '${myCity}'`, (err, res) => {  
     if(err) {
       console.log('error: ', err);
       result(null, err);
@@ -156,7 +156,7 @@ Dealer.requestDriver = (dealerId, driverId, result) => {
 }
 
 Dealer.getRequestedDrivers = (dealerId, result) => {
-  sql.query(`SELECT * FROM cart WHERE dealerId = ${dealerId}`, (err, res) => {
+  sql.query(`select cart.id as cartId, cart.dealerId, cart.reqByDealer, cart.accByDriver, driver.name, cart.driverId from cart inner join driver on cart.driverId = driver.id where cart.dealerId = ${dealerId}`, (err, res) => {
     if (err) {
       console.log('error: ', err);
       result(null, err);
