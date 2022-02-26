@@ -120,6 +120,38 @@ exports.login = (req, res) => {
   });
 }
 
+exports.getRequestedDealers = (req, res) => {
+  Driver.getRequestedDealers(req.params.driverId, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found driver with id ${req.params.driverId}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: 'Error retrieving Driver with id ' + req.params.driverId,
+        });
+      }
+    } else res.send(data);
+  });
+}
+
+exports.getAcceptedDealers = (req, res) => {
+  Driver.getAcceptedDealers(req.params.driverId, (err, data) => {
+    if (err) {
+      if (err.kind === 'not_found') {
+        res.status(404).send({
+          message: `Not found driver with id ${req.params.driverId}.`,
+        });
+      } else {
+        res.status(500).send({
+          message: 'Error retrieving Driver with id ' + req.params.driverId,
+        });
+      }
+    } else res.send(data);
+  });
+}
+
 exports.acceptDealer = (req, res) => {
   Driver.acceptDealer(req.params.id, req.params.dealerId, req.params.driverId, (err, data) => {
     if (err) {

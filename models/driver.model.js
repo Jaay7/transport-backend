@@ -119,6 +119,40 @@ Driver.login = (email, password, result) => {
   });
 }
 
+Driver.getRequestedDealers = (driverId, result) => {
+  sql.query(`select cart.id as cartId, cart.driverId, cart.reqByDealer, cart.accByDriver, dealer.name, cart.dealerId from cart inner join dealer on cart.dealerId = dealer.id where cart.driverId=${driverId} and cart.reqByDealer='sent' and cart.accByDriver='pending'`, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if (res.length) {
+      console.log('found requested dealers: ', res);
+      result(null, res);
+      return;
+    }
+    // not found Dealer with the id
+    result({ kind: 'not_found' }, null);
+  });
+}
+
+Driver.getAcceptedDealers = (driverId, result) => {
+  sql.query(`select cart.id as cartId, cart.driverId, cart.reqByDealer, cart.accByDriver, dealer.name, cart.dealerId from cart inner join dealer on cart.dealerId = dealer.id where cart.driverId=${driverId} and cart.reqByDealer='done' and cart.accByDriver='accepted'`, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      result(null, err);
+      return;
+    }
+    if (res.length) {
+      console.log('found accepted dealers: ', res);
+      result(null, res);
+      return;
+    }
+    // not found Dealer with the id
+    result({ kind: 'not_found' }, null);
+  });
+}
+
 Driver.acceptDealer = (id, dealerId, driverId, result) => {
   sql.query(`UPDATE cart SET reqByDealer = ?, accByDriver = ? WHERE id = ${id} and dealerId = ${dealerId} and driverId = ${driverId}`, ['done', 'accepted'], (err, res) => {
     if (err) {
