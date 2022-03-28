@@ -12,6 +12,44 @@ const Dealer = function(dealer) {
   this.state = dealer.state;
 }
 
+Dealer.create_table = () => {
+  sql.query(`CREATE TABLE IF NOT EXISTS dealer (
+      id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+      name varchar(255) NOT NULL,
+      email varchar(255) NOT NULL UNIQUE,
+      password varchar(255) NOT NULL,
+      mobile varchar(10) NOT NULL,
+      natureOfMaterial varchar(255) NOT NULL,
+      weightOfMaterial float NOT NULL,
+      quantity float NOT NULL,
+      city varchar(255) NOT NULL,
+      state varchar(255) NOT NULL
+  )`, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      return;
+    }
+    console.log('dealer table created');
+  });
+}
+
+Dealer.create_cart_table = () => {
+  sql.query(`CREATE TABLE IF NOT EXISTS cart (
+      id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+      dealerId int NOT NULL references dealer.id,
+      driverId int NOT NULL references driver.id,
+      reqByDealer varchar(255) NOT NULL DEFAULT 'none',
+      accByDriver varchar(255) NOT NULL DEFAULT 'none',
+      reqDate timestamp DEFAULT CURRENT_TIMESTAMP
+  )`, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      return;
+    }
+    console.log('cart table created');
+  });
+}
+
 Dealer.create = (newDealer, result) => {
   sql.query('INSERT INTO dealer SET ?', newDealer, (err, res) => {
     if (err) {

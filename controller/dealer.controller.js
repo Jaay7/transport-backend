@@ -1,10 +1,30 @@
 const Dealer = require('../models/dealer.model.js');
 
+exports.create_table = (req, res) => {
+  Dealer.create_table((err, data) => {
+    if (err) {
+      res.status(500).send({
+        message: 'Error creating table',
+      });
+    } else res.send({ message: 'Dealer Table created successfully' });
+  });
+}
+
+exports.create_cart_table = (req, res) => {
+  Dealer.create_cart_table((err, data) => {
+    if (err) {
+      res.status(500).send({
+        message: 'Error creating table',
+      });
+    } else res.send({ message: 'Cart Table created successfully' });
+  });
+}
+
 exports.create = (req, res) => {
   // Request validation
   if (!req.body) {
     return res.status(400).send({
-      message: 'Driver content can not be empty',
+      message: 'Dealer content can not be empty',
     });
   }
 

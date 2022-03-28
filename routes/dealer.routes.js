@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const dealer = require('../controller/dealer.controller.js');
 
+router.post('/create_table', dealer.create_table);
+router.post('/create_cart_table', dealer.create_cart_table);
 router.post('/addDealer', dealer.create);
 router.post('/login', dealer.login);
 router.post('/requestDriver/:dealerId/:driverId', dealer.requestDriver);
