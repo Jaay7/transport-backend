@@ -1,5 +1,16 @@
 const Driver = require('../models/driver.model');
 
+exports.create_table = (req, res) => {
+  Driver.create_table((err, data) => {
+    if (err)
+      res.status(500).send({
+        message:
+          err.message || 'Some error occurred while creating the Driver.',
+      });
+    else res.send({ message: 'Driver table created successfully' });
+  });
+}
+
 exports.create = (req, res) => {
   // Request validation
   if (!req.body) {

@@ -15,6 +15,30 @@ const Driver = function(driver) {
   this.route3 = driver.route3;
 }
 
+Driver.create_table = () => {
+  sql.query(`CREATE TABLE IF NOT EXISTS driver (
+      id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+      name varchar(255) NOT NULL,
+      email varchar(255) NOT NULL UNIQUE,
+      password varchar(255) NOT NULL,
+      age int NOT NULL,
+      truckNumber varchar(30) NOT NULL,
+      mobile varchar(10) NOT NULL,
+      truckCapacity float NOT NULL,
+      transporterName varchar(255) NOT NULL,
+      drivingExperience float NOT NULL,
+      route1 varchar(255) NOT NULL,
+      route2 varchar(255) NOT NULL,
+      route3 varchar(255) NOT NULL
+  )`, (err, res) => {
+    if (err) {
+      console.log('error: ', err);
+      return;
+    }
+    console.log('driver table created');
+  });
+}
+
 Driver.create = (newDriver, result) => {
   sql.query('INSERT INTO driver SET ?', newDriver, (err, res) => {
     if (err) {

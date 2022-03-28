@@ -2,6 +2,7 @@ const driver = require('../controller/driver.controller.js');
 var express = require('express');
 var router = express.Router();
 
+router.post('/create_table', driver.create_table);
 router.post('/addDriver', driver.create);
 router.post('/login', driver.login);
 router.get('/getDriver/:driverId', driver.findById);
