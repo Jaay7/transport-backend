@@ -14,10 +14,12 @@ npm install
 ```
 - Create a <b>.env</b> file in the root folder.
 ```
-DB_HOST="localhost"
-DB_USER="<your username>"
-DB_PASS=<your password>
-DB_NAME="transport_service"
+MYSQL_HOST=mysql_server
+MYSQL_DATABASE=transport_service
+MYSQL_USER=<your username>
+MYSQL_PASSWORD=<your password>
+MYSQL_ROOT_PASSWORD=<your root password>
+PORT=3020
 ```
 - Running the application.
 ```sh
