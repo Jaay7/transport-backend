@@ -9,7 +9,7 @@ var dealer = require('./routes/dealer.routes.js');
 var driver = require('./routes/driver.routes.js');
 
 var corsOptions = {
-  origin: 'http://localhost:4200',
+  origin: ['http://localhost:4200', 'https://transportation-service.vercel.app'],
 };
 
 app.use(cors(corsOptions));
