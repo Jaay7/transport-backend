@@ -25,6 +25,14 @@ PORT=3020
 ```sh
 npm start
 ```
+- To start the docker compose.
+```sh
+docker-compose up
+```
+- To remove the docker compose.
+```sh
+docker-compose down
+```
 
 #### Frontend
 https://github.com/Jaay7/transport-frontend
