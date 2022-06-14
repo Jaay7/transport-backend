@@ -7,16 +7,17 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3020:3020
+    env_file: .env
     volumes:
       - .:/app
       - '/app/node_modules'
-    depends_on:
-      - mysql_server
+  #   depends_on:
+  #     - mysql_server
   
-  mysql_server:
-    image: mysql:8.0
-    environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+  # mysql_server:
+  #   image: mysql:8.0
+  #   environment:
+  #     - MYSQL_DATABASE=${MYSQL_DATABASE}
+  #     - MYSQL_USER=${MYSQL_USER}
+  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
