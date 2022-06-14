@@ -7,7 +7,7 @@ exports.create_table = (req, res) => {
         message:
           err.message || 'Some error occurred while creating the Driver.',
       });
-    else res.send({ message: 'Driver table created successfully' });
+    else res.send(data);
   });
 }
 

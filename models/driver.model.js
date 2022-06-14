@@ -36,6 +36,7 @@ Driver.create_table = () => {
       return;
     }
     console.log('driver table created');
+    result(null, {message: 'driver table created'});
   });
 }
 

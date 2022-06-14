@@ -6,7 +6,7 @@ exports.create_table = (req, res) => {
       res.status(500).send({
         message: 'Error creating table',
       });
-    } else res.send({ message: 'Dealer Table created successfully' });
+    } else res.send(data);
   });
 }
 
@@ -16,7 +16,7 @@ exports.create_cart_table = (req, res) => {
       res.status(500).send({
         message: 'Error creating table',
       });
-    } else res.send({ message: 'Cart Table created successfully' });
+    } else res.send(data);
   });
 }
 

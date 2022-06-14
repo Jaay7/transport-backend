@@ -30,6 +30,7 @@ Dealer.create_table = () => {
       return;
     }
     console.log('dealer table created');
+    result(null, {message: 'dealer table created'});
   });
 }
 
@@ -47,6 +48,7 @@ Dealer.create_cart_table = () => {
       return;
     }
     console.log('cart table created');
+    result(null, {message: 'cart table created'});
   });
 }
 
